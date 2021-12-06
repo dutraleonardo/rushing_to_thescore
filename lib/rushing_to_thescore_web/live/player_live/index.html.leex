@@ -1,0 +1,66 @@
+<form phx-change="filter">
+  <input type="text" name="filter" value="<%= @query %>" placeholder="Search by player name" phx-debounce="1000"/>
+</form>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= gettext("Player") %></th>
+      <th><%= gettext("Team") %></th>
+      <th><%= gettext("Pos") %></th>
+      <th><%= gettext("Att") %></th>
+      <th><%= gettext("Att/G") %></th>
+      <th><%= live_patch "yds", to: Routes.player_index_path(@socket,:index, %{sort_by: :yds, filter: @query}) %></th>
+      <th><%= gettext("Avg") %></th>
+      <th><%= gettext("Yds/G") %></th>
+      <th><%= live_patch "td", to: Routes.player_index_path(@socket, :index, %{sort_by: :td, filter: @query}) %></th>
+      <th><%= live_patch "lng", to: Routes.player_index_path(@socket, :index,%{sort_by: :lng, filter: @query}) %></th>
+      <th><%= gettext("1st") %></th>
+      <th><%= gettext("1st%") %></th>
+      <th><%= gettext("20+") %></th>
+      <th><%= gettext("40+") %></th>
+      <th><%= gettext("FUM") %></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th><%= gettext("Player") %></th>
+      <th><%= gettext("Team") %></th>
+      <th><%= gettext("Pos") %></th>
+      <th><%= gettext("Att/G") %></th>
+      <th><%= gettext("Att") %></th>
+      <th><%= gettext("Yds") %></th>
+      <th><%= gettext("Avg") %></th>
+      <th><%= gettext("Yds/G") %></th>
+      <th><%= gettext("TD") %></th>
+      <th><%= gettext("Lng") %></th>
+      <th><%= gettext("1st") %></th>
+      <th><%= gettext("1st%") %></th>
+      <th><%= gettext("20+") %></th>
+      <th><%= gettext("40+") %></th>
+      <th><%= gettext("FUM") %></th>
+    </tr>
+  </tfoot>
+<tbody>
+    <%= for player <- @stats do %>
+      <tr>
+        <th><%=player.player %></th>
+        <td>
+          <%= player.team %>
+        </td>
+          <td class="has-text-right"><%= player.pos %></td>
+          <td class="has-text-right"><%= player.att_g %></td>
+          <td class="has-text-right"><%= player.att %></td>
+          <td class="has-text-right"><%= player.yds %></td>
+          <td class="has-text-right"><%= player.avg %></td>
+          <td class="has-text-right"><%= player.yds_g %></td>
+          <td class="has-text-right"><%= player.td %></td>
+          <td class="has-text-right"><%= player.lng %></td>
+          <td class="has-text-right"><%= player.first_down %></td>
+          <td class="has-text-right"><%= player.first_down_porcent %></td>
+          <td class="has-text-right"><%= player.twenty_plus %></td>
+          <td class="has-text-right"><%= player.forty_plus %></td>
+          <td class="has-text-right"><%= player.fum %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

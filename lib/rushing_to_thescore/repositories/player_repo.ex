@@ -11,12 +11,14 @@ defmodule RushingToThescore.PlayerRepo do
   Example filter:
 
   [
-   paginate: %{page: 2, per_page: 5},
-   sort: %{sort_by: :item, sort_order: :asc},
-   filter: %{player: ""}
+    filter: %{player: "Joe"},
+    sorting: %{sort_by: :item, sort_order: :asc},
   ]
   """
   def list(filter) when is_list(filter) do
+    require IEx
+    IEx.pry()
+
     from(d in Player)
     |> filter_generator(filter)
     |> Repo.all()

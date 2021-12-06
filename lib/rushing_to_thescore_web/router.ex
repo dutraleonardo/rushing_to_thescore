@@ -4,7 +4,8 @@ defmodule RushingToThescoreWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {RushingToThescoreWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -16,7 +17,7 @@ defmodule RushingToThescoreWeb.Router do
   scope "/", RushingToThescoreWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PlayerLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
