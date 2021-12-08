@@ -1,5 +1,5 @@
 <form phx-change="filter">
-  <input type="text" name="filter" value="<%= @query %>" placeholder="Search by player name" phx-debounce="1000"/>
+  <input type="text" name="player_name" value="<%= @search_query.player %>" placeholder="Search Player Name" phx-debounce="1000"/>
 </form>
 <table class="table">
   <thead>
@@ -9,11 +9,11 @@
       <th><%= gettext("Pos") %></th>
       <th><%= gettext("Att") %></th>
       <th><%= gettext("Att/G") %></th>
-      <th><%= live_patch "yds", to: Routes.player_index_path(@socket,:index, %{sort_by: :yds, filter: @query}) %></th>
+      <th><%= sort_column(@socket, "Yds", :yds, @search_query) %></th>
       <th><%= gettext("Avg") %></th>
       <th><%= gettext("Yds/G") %></th>
-      <th><%= live_patch "td", to: Routes.player_index_path(@socket, :index, %{sort_by: :td, filter: @query}) %></th>
-      <th><%= live_patch "lng", to: Routes.player_index_path(@socket, :index,%{sort_by: :lng, filter: @query}) %></th>
+      <th><%= sort_column(@socket, "TD", :yds, @search_query) %></th>
+      <th><%= sort_column(@socket, "Lng", :yds, @search_query) %></th>
       <th><%= gettext("1st") %></th>
       <th><%= gettext("1st%") %></th>
       <th><%= gettext("20+") %></th>
@@ -64,3 +64,36 @@
     <% end %>
   </tbody>
 </table>
+<div class="footer">
+  <div class="pagination_section">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination_section">
+        <%= if @search_query.page > 1 do %>
+          <li class="page-item">
+            <%= data_pagination(@socket,
+                                "Previous",
+                                @search_query.page - 1,
+                                @search_query,
+                                "page-link") %>
+
+          </li>
+        <% end %>
+        <%= for p <- (@search_query.page - 2)..(@search_query.page + 2), p > 0 do %>
+          <li class="page-item">
+            <%= data_pagination(@socket,
+                                p,
+                                p,
+                                @search_query,
+                                "page-link") %>
+          </li>
+        <% end %>
+        <li class="page-item">
+          <%= data_pagination(@socket,
+                          "Next",
+                          @search_query.page + 1,
+                          @search_query, "page-link") %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

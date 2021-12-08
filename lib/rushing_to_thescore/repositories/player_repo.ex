@@ -13,12 +13,10 @@ defmodule RushingToThescore.PlayerRepo do
   [
     filter: %{player: "Joe"},
     sorting: %{sort_by: :item, sort_order: :asc},
+    pagination: %{page: 3, per_page: 10}
   ]
   """
   def list(filter) when is_list(filter) do
-    require IEx
-    IEx.pry()
-
     from(d in Player)
     |> filter_generator(filter)
     |> Repo.all()
@@ -33,19 +31,6 @@ defmodule RushingToThescore.PlayerRepo do
     end)
   end
 
-  def list_group_by do
-    from(p in Player,
-      group_by: p.team,
-      order_by: [desc: sum(p.yds)],
-      select: %{
-        Team: p.team,
-        Yds: sum(p.yds),
-        Lng: fragment("max(replace(?, 'T', '')::integer)", p.lng)
-      }
-    )
-    |> Repo.all()
-  end
-
   defp filter_generator(query, clause) when is_list(clause) do
     Enum.reduce(clause, query, fn
       {:filter, %{player: player_name}}, query ->
@@ -53,6 +38,11 @@ defmodule RushingToThescore.PlayerRepo do
 
       {:sorting, %{sort_by: sort_by, sort_order: sort_order}}, query ->
         from q in query, order_by: [{^sort_order, ^sort_by}]
+
+      {:pagination, %{page: page, per_page: per_page}}, query ->
+        from q in query,
+          offset: ^((page - 1) * per_page),
+          limit: ^per_page
     end)
   end
 end
