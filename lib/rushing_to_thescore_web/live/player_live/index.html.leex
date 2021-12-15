@@ -1,6 +1,25 @@
 <form phx-change="filter">
   <input type="text" name="player_name" value="<%= @search_query.player %>" placeholder="Search Player Name" phx-debounce="1000"/>
 </form>
+<div class="columns">
+  <div class="column">
+    <%= link to: Routes.download_path(RushingToThescoreWeb.Endpoint, :index, @search_query), class: "button is-info" do %>
+      <p>
+        Download <i class="fas fa-file-csv"></i>
+      </p>
+    <% end %>
+  </div>
+  <div class="column">
+    <%= link to: Routes.download_path(RushingToThescoreWeb.Endpoint, :index,
+    %{"player" => @search_query.player, "sort_order" => @search_query.sort_order,
+    "sort_by" => @search_query.sort_by}),
+    class: "button is-info" do %>
+      <p>
+        Download All <i class="fas fa-file-csv"></i>
+      </p>
+    <% end %>
+  </div>
+</div>
 <table class="table">
   <thead>
     <tr>

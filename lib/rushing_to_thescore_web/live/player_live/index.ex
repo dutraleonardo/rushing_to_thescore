@@ -2,10 +2,18 @@ defmodule RushingToThescoreWeb.PlayerLive.Index do
   use RushingToThescoreWeb, :live_view
 
   alias RushingToThescore.PlayerRepo
+  require IEx
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket, temporary_assigns: [stats: [], search_query: ""]}
+    {:ok,
+     assign(
+       socket,
+       stats: [],
+       search_query: ""
+     )
+     |> assign(:uploaded_files, [])
+     |> allow_upload(:data, accept: ~w(.json), max_entries: 1)}
   end
 
   @impl true
@@ -15,12 +23,12 @@ defmodule RushingToThescoreWeb.PlayerLive.Index do
     players =
       PlayerRepo.list(
         filter: formatted_params.filter,
-        sorting: formatted_params.sort_parms,
+        sorting: formatted_params.sort_params,
         pagination: formatted_params.pagination_options
       )
 
     search_query =
-      Map.merge(formatted_params.pagination_options, formatted_params.sort_parms)
+      Map.merge(formatted_params.pagination_options, formatted_params.sort_params)
       |> Map.put(:player, formatted_params.player)
 
     socket =
@@ -40,14 +48,14 @@ defmodule RushingToThescoreWeb.PlayerLive.Index do
     per_page = String.to_integer(params["per_page"] || "5")
 
     pagination_options = %{page: page, per_page: per_page}
-    sort_parms = %{sort_by: sort_by, sort_order: sort_order}
+    sort_params = %{sort_by: sort_by, sort_order: sort_order}
 
     filter = %{player: String.capitalize(player)}
 
     %{
       filter: filter,
       player: player,
-      sort_parms: sort_parms,
+      sort_params: sort_params,
       pagination_options: pagination_options
     }
   end

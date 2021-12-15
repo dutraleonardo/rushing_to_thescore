@@ -18,6 +18,7 @@ defmodule RushingToThescoreWeb.Router do
     pipe_through :browser
 
     live "/", PlayerLive.Index, :index
+    get "/download", DownloadController, :index
   end
 
   # Other scopes may use custom stacks.
