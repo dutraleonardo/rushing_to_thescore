@@ -4,7 +4,24 @@ defmodule RushingToThescore.PlayerRepo do
   alias RushingToThescore.Repo
   alias RushingToThescore.Player
 
-  @spec list(maybe_improper_list) :: any
+  @doc """
+  Creates a football_player.
+
+  ## Examples
+
+      iex> create(%{field: value})
+      {:ok, %FootballPlayer{}}
+
+      iex> create(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create(attrs \\ %{}) do
+    %Player{}
+    |> Player.changeset(attrs)
+    |> Repo.insert()
+  end
+
   @doc """
   Returns a list of players based on a `filter`.
 
@@ -17,18 +34,14 @@ defmodule RushingToThescore.PlayerRepo do
   ]
   """
   def list(filter) when is_list(filter) do
-    from(d in Player)
+    from(p in Player)
     |> filter_generator(filter)
     |> Repo.all()
   end
 
-  def insert_entries_from_file(file) do
-    {:ok, rushing_stats} = RushingToThescore.Helpers.FileImporter.json_importer(file)
-
-    Enum.each(rushing_stats, fn rushing_stat ->
-      RushingToThescore.Player.changeset(%RushingToThescore.Player{}, rushing_stat)
-      |> RushingToThescore.Repo.insert!()
-    end)
+  def list() do
+    from(p in Player)
+    |> Repo.all()
   end
 
   defp filter_generator(query, clause) when is_list(clause) do

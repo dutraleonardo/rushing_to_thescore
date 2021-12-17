@@ -2,7 +2,6 @@ defmodule RushingToThescoreWeb.PlayerLive.Index do
   use RushingToThescoreWeb, :live_view
 
   alias RushingToThescore.PlayerRepo
-  require IEx
 
   @impl true
   def mount(_params, _session, socket) do
