@@ -62,6 +62,7 @@ If you have any questions regarding requirements, do not hesitate to email your 
 ### Installation and running this solution
 
 #### How to run:
+
 1. Install Erlang and Elixir (I recommend to use [`asdf`](https://asdf-vm.com/#/) to manage versions on your local enviroment. The versions can be found in [`.tool-versions`](/.tool-versions)).
 a. In case of you don't want to use `asdf` you can install Elixir following this [link](http:/https://elixir-lang.org/install.html/ "link").
 2. Install Docker and docker-compose [here](http:/https://docs.docker.com/compose/install// "here").
