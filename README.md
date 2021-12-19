@@ -80,3 +80,5 @@ docker-compose up
 ```
 All done! :) 
 Open your brownser on [`localhost:4000`](http://localhost:4000) and have fun!
+
+Also, you can access this project [HERE](https://rushing-to-thescore.herokuapp.com/)
