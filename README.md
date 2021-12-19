@@ -2,6 +2,8 @@
 
 [![TEST](https://github.com/dutraleonardo/rushing_to_thescore/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/dutraleonardo/rushing_to_thescore/actions/workflows/test.yml)
 
+[![DEPLOY](https://github.com/dutraleonardo/rushing_to_thescore/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/dutraleonardo/rushing_to_thescore/actions/workflows/deploy.yml)
+
 
 At theScore, we are always looking for intelligent, resourceful, full-stack developers to join our growing team. To help us evaluate new talent, we have created this take-home interview question. This question should take you no more than a few hours.
 
