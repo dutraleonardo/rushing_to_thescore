@@ -1,0 +1,16 @@
+{
+    "skip_files":
+        [
+            "test",
+            "lib/rushing_to_thescore.ex",
+            "lib/rushing_to_thescore_web.ex",
+            "lib/rushing_to_thescore/application.ex",
+            "lib/rushing_to_thescore/repo.ex",
+            "lib/rushing_to_thescore_web/endpoint.ex",
+            "lib/rushing_to_thescore_web/gettext.ex",
+            "lib/rushing_to_thescore_web/telemetry.ex",
+            "lib/rushing_to_thescore_web/views/error_helpers.ex",
+            "lib/rushing_to_thescore_web/views/layout_view.ex"
+        ]
+}
+  

@@ -1,4 +1,5 @@
-<form phx-change="filter">
+<h1 class="has-text-centered title">Rushing to <a href="https://www.thescore.com/" target="_blank"> theScore </a></h1>
+<form phx-change="filter" id="player_filter">
   <input type="text" name="player_name" value="<%= @search_query.player %>" placeholder="Search Player Name" phx-debounce="1000"/>
 </form>
 <div class="columns">

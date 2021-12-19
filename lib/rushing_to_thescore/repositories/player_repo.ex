@@ -1,8 +1,8 @@
 defmodule RushingToThescore.PlayerRepo do
   import Ecto.Query, warn: false
 
-  alias RushingToThescore.Repo
   alias RushingToThescore.Player
+  alias RushingToThescore.Repo
 
   @doc """
   Creates a football_player.
@@ -39,7 +39,7 @@ defmodule RushingToThescore.PlayerRepo do
     |> Repo.all()
   end
 
-  def list() do
+  def list do
     from(p in Player)
     |> Repo.all()
   end

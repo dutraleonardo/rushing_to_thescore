@@ -65,45 +65,42 @@ defmodule RushingToThescore.PlayerRepoTest do
   end
 
   describe "list/1" do
+    setup [:insert_players]
+
     test "list all players" do
-      insert_players()
       players = PlayerRepo.list()
       refute(is_nil(players))
       assert length(players) == 2
     end
 
     test "filter player by full name and part of his name" do
-      insert_players()
-      query_full_name = PlayerRepo.list([filter: %{player: "Joe Banyard"}])
-      query_part_name = PlayerRepo.list([filter: %{player: "Banyard"}])
+      query_full_name = PlayerRepo.list(filter: %{player: "Joe Banyard"})
+      query_part_name = PlayerRepo.list(filter: %{player: "Banyard"})
       refute(is_nil(query_full_name))
       refute(is_nil(query_part_name))
       assert List.first(query_full_name).player == "Joe Banyard"
       assert List.first(query_part_name).player == "Joe Banyard"
     end
+
     test "filter by a nonexistent player" do
-      insert_players()
-      query_ghost = PlayerRepo.list([filter: %{player: "Ghost"}])
+      query_ghost = PlayerRepo.list(filter: %{player: "Ghost"})
       assert query_ghost == []
     end
+
     test "test pagination" do
-      insert_players()
-      paginated =
-        PlayerRepo.list([pagination: %{page: 1, per_page: 1}])
+      paginated = PlayerRepo.list(pagination: %{page: 1, per_page: 1})
       assert length(paginated) == 1
     end
+
     test "test sort" do
-      insert_players()
-      sort_by_att_desc =
-        PlayerRepo.list([sorting: %{sort_by: :att, sort_order: :desc}])
-      sort_by_att_asc =
-        PlayerRepo.list([sorting: %{sort_by: :att, sort_order: :asc}])
+      sort_by_att_desc = PlayerRepo.list(sorting: %{sort_by: :att, sort_order: :desc})
+      sort_by_att_asc = PlayerRepo.list(sorting: %{sort_by: :att, sort_order: :asc})
       assert List.first(sort_by_att_desc).player == "Shaun Hill"
       assert List.first(sort_by_att_asc).player == "Joe Banyard"
     end
   end
 
-  defp insert_players() do
+  defp insert_players(_) do
     Enum.map(
       @create_players,
       fn player -> PlayerRepo.create(player) end
